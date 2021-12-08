@@ -22,7 +22,7 @@ jobs:
           
       - name: Publish
         run: |
-          git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/${GITHUB_ACTOR}/${GITHUB_ACTOR}.github.io.git" public
+          git clone "https://${{ secrets.ACCESS_TOKEN }}@github.com/vicimpa/vicimpa.github.io.git" public
           cd public
           rm -rf browser-cli
           mv ../dist browser-cli
