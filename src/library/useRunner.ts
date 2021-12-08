@@ -1,12 +1,13 @@
 import { useProxyState } from "./useProxyState";
 import Worker from 'library/worker?worker';
+import { version } from "../../package.json";
 
 const modules = import.meta.glob('/src/commands/*.ts');
 
 export const useRunner = () => {
   const state = useProxyState(() => ({
     running: false,
-    output: [] as string[]
+    output: [`Browser CLI v${version}`] as string[]
   }));
 
   const push = (str: string) => {
