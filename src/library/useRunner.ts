@@ -1,13 +1,18 @@
-import { useProxyState } from "./useProxyState";
-import Worker from 'library/worker?worker';
+import { env } from "env";
+import Worker from "library/worker?worker";
+
 import { version } from "../../package.json";
+import { useProxyState } from "./useProxyState";
 
 const modules = import.meta.glob('/src/commands/*.ts');
 
 export const useRunner = () => {
   const state = useProxyState(() => ({
     running: false,
-    output: [`Browser CLI v${version}`] as string[]
+    output: [
+      `Browser CLI v${version}\n`,
+      `Type "help" for start or press "Tab"\n`
+    ] as string[]
   }));
 
   const push = (str: string) => {
@@ -76,7 +81,13 @@ export const useRunner = () => {
               resolve();
             });
 
-            worker.postMessage(JSON.stringify({ program, args, cmd: module?.toString() || '' }));
+
+            worker.postMessage(JSON.stringify({
+              program,
+              args,
+              env: await env(),
+              cmd: module?.toString() || ''
+            }));
           });
 
           promise

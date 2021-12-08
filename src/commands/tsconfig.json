@@ -5,11 +5,11 @@
     "lib": [
       "ESNext",
       "WebWorker"
-    ],
-    "baseUrl": "../"
+    ]
   },
   "include": [
     "./**/*.ts",
-    "../global.d.ts"
+    "../global.d.ts",
+    "../library/delay.ts"
   ]
 }

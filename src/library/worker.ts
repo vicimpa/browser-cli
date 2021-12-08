@@ -1,3 +1,5 @@
+import type { env } from "env";
+
 export default undefined;
 
 try {
@@ -17,12 +19,14 @@ try {
   };
 
   addEventListener('message', async ({ data }) => {
-    const { program = '', args = [], cmd } = JSON.parse(data) as {
+    const { program = '', args = [], cmd, env: environments } = JSON.parse(data) as {
       program: string,
       args: string[];
       cmd: string;
+      env: typeof env;
     };
 
+    (globalThis as any)['env'] = environments;
 
     const run = async () => {
       try {

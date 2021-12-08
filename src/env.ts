@@ -1,5 +1,8 @@
-export const env = {
-  startTime: Date.now(),
-  user: 'vic',
-  host: 'WSV'
+import { getAllProgram } from "library/program";
+
+export const env = async () => {
+  return {
+    startTime: Date.now(),
+    commands: await getAllProgram()
+  };
 };

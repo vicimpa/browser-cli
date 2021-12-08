@@ -1,4 +1,5 @@
 import { FC, useEffect, useState } from "react";
+
 import styles from "./cursor.module.sass";
 
 export const Cursor: FC = () => {
@@ -12,5 +13,5 @@ export const Cursor: FC = () => {
     return () => clearTimeout(timer);
   });
 
-  return <span className={show ? styles.root : undefined} />;
+  return <span className={styles.root + ' ' + (show ? styles.show : undefined)} />;
 };
