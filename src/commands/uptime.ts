@@ -10,5 +10,5 @@ export default () => {
   let h = (delta /= 60) | 0 % 24;
   let d = (delta /= 24) | 0;
 
-  return `System uptime: ${d}d ${h}h ${m}m ${s}s ${m}ms`;
+  return `System uptime: ${d}d ${h}h ${m}m ${s}s ${ms}ms`;
 };
