@@ -27,6 +27,8 @@ jobs:
           rm -rf browser-cli
           mv ../dist browser-cli
           git add browser-cli/*
+          git config --global user.email "vicimpa@ya.ru"
+          git config --global user.name "PromiSe####"
           COMMIT_MESSAGE="Update pages on $(date +'%Y-%m-%d %H:%M:%S')"
           git commit -m "${COMMIT_MESSAGE}"
           git push
