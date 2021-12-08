@@ -1,8 +1,9 @@
 import { getAllProgram } from "library/program";
+const startTime = Date.now();
 
 export const env = async () => {
   return {
-    startTime: Date.now(),
+    startTime,
     commands: await getAllProgram()
   };
 };
