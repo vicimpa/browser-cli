@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "lib": [
+      "ESNext",
+      "WebWorker"
+    ],
+    "baseUrl": "../"
+  },
+  "include": [
+    "./",
+    "../global.d.ts"
+  ]
+}
