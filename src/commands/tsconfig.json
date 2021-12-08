@@ -9,7 +9,7 @@
     "baseUrl": "../"
   },
   "include": [
-    "./",
+    "./**/*.ts",
     "../global.d.ts"
   ]
 }
