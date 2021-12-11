@@ -74,8 +74,10 @@ export const useRunner = () => {
       const listener = (e: KeyboardEvent) => {
         e.preventDefault();
 
-        if (e.ctrlKey && e.key == 'c')
-          exit();
+        if (false
+          || (e.ctrlKey && e.key == 'c')
+          || (e.metaKey && e.key == 'c')
+        ) exit();
       };
 
       document.addEventListener('keydown', listener);
