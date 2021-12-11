@@ -11,6 +11,6 @@ export default async function (
 
   while (true) {
     this.log('Count: ', ++i);
-    await delay(10);
+    await delay(1000);
   }
 }
