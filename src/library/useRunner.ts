@@ -20,12 +20,33 @@ export const useRunner = () => {
     state.output.push(str + (str[str.length - 1] == '\n' ? '' : '\n'));
   };
 
+  const argsToString = (args: any[], stack = 0) => {
+    let segments: string[] = [];
+
+    for (const arg of args) {
+      if (arg == undefined) continue;
+      else if (arg == null) segments.push('null');
+      else if (typeof arg !== 'object')
+        segments.push(arg.toString());
+      else if (Array.isArray(arg)) {
+        segments.push(`[${arg.map(e => argsToString([e], stack + 1)).join(', ')}]`);
+      } else {
+        segments.push(`{${Object.entries(arg).map(([key, value]) => {
+          value = argsToString([value], stack + 1);
+          return `${key}: ${value}`;
+        }).join(', ')}}`);
+      }
+    }
+
+    return segments.join(' ');
+  };
+
   const context: IContext = {
     log(...args: any[]) {
-      push(args.join(' '));
+      push(argsToString(args));
     },
     error(...args: any[]) {
-      push('Error: ' + args.join(' '));
+      push('Error: ' + argsToString(args));
     },
     clear() {
       state.output.splice(0);
@@ -44,60 +65,54 @@ export const useRunner = () => {
       if (!cmd) return;
       const [program, ...args] = cmd.split(/\s+/);
 
-      switch (program) {
-        case 'clear': return context.clear();
+      state.running = true;
 
-        default: {
-          state.running = true;
+      const subs: (() => void)[] = [];
+      const exit = () => subs.splice(0).map(e => e());
+      const worker = new Worker();
 
-          const subs: (() => void)[] = [];
-          const exit = () => subs.splice(0).map(e => e());
-          const worker = new Worker();
+      const listener = (e: KeyboardEvent) => {
+        e.preventDefault();
 
-          const listener = (e: KeyboardEvent) => {
-            e.preventDefault();
-
-            if (e.ctrlKey && e.key == 'c')
-              exit();
-          };
-
-          document.addEventListener('keydown', listener);
-
-
-          const promise = new Promise<void>(async (resolve) => {
-            worker.onmessage = ({ data }) => {
-              const { program, args } = JSON.parse(data);
-              if (program == 'end')
-                return resolve();
-              else
-                (<any>context)[program](...args);
-            };
-
-            const module = modules[`/src/commands/${program}.ts`];
-
-
-            subs.push(() => {
-              worker.terminate();
-              resolve();
-            });
-
-
-            worker.postMessage(JSON.stringify({
-              program,
-              args,
-              env: await env(),
-              cmd: module?.toString() || ''
-            }));
-          });
-
-          promise
-            .finally(() => {
-              exit();
-              state.running = false;
-              document.removeEventListener('keydown', listener);
-            });
-        }
+        if (e.ctrlKey && e.key == 'c')
+          exit();
       };
+
+      document.addEventListener('keydown', listener);
+
+
+      const promise = new Promise<void>(async (resolve) => {
+        worker.onmessage = ({ data }) => {
+          const { program, args } = JSON.parse(data);
+          if (program == 'end')
+            return resolve();
+          else
+            (<any>context)[program](...args);
+        };
+
+        const module = modules[`/src/commands/${program}.ts`];
+
+
+        subs.push(() => {
+          worker.terminate();
+          resolve();
+        });
+
+
+        worker.postMessage(JSON.stringify({
+          program,
+          args,
+          env: await env(),
+          cmd: module?.toString() || ''
+        }));
+      });
+
+      promise
+        .finally(() => {
+          exit();
+          state.running = false;
+          document.removeEventListener('keydown', listener);
+        });
     }
   };
 };

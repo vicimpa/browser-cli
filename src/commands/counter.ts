@@ -6,12 +6,11 @@ export default async function (
   this: IContext,
   ...args: string[]
 ) {
-  this.log('Seconds counter.');
   this.log('Press Ctrl+C for exit.');
   let i = 0;
 
   while (true) {
     this.log('Count: ', ++i);
-    await delay(1000);
+    await delay(10);
   }
 }
