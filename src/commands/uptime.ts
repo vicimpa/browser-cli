@@ -1,5 +1,7 @@
 import { getEnv } from "./lib/getEnv";
 
+export const _description_ = 'Show current session uptime';
+
 export default () => {
   const { startTime } = getEnv();
   let delta = Date.now() - startTime;
