@@ -94,14 +94,13 @@ export const Input: FC<IInput> = ({
         ) : <Cursor />}
       </pre>
       {showComplate ? (
-        <pre>
-          {filterSelect.map((e) => {
-            if (e.index == select)
-              return `[-${e.name}-]`;
-            else
-              return `  ${e.name}  `;
-          }).join(' ')}
-        </pre>
+        filterSelect.map((e, i) => {
+          return (
+            <span key={'j' + i} data-select={e.index == select || undefined}>
+              {e.name}
+            </span>
+          );
+        })
       ) : null}
     </>
   );

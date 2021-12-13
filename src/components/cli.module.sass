@@ -9,3 +9,20 @@
     font-weight: 600
     font-size: 14px
     line-height: 20px
+
+  
+  span
+    white-space: pre
+
+  span:before
+    content: ' '
+  span:after
+    content: ' '
+
+  span[data-select]
+    color: green
+    &:before
+      content: '['
+
+    &:after
+      content: ']'
