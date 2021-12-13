@@ -38,7 +38,10 @@ export const Input: FC<IInput> = ({
 
     const { key, code } = e;
 
-    if (e.ctrlKey && key == 'l') {
+    if (false
+      || (e.ctrlKey && key == 'l')
+      || (e.metaKey && key == 'l')
+    ) {
       context.clear();
       return;
     }
