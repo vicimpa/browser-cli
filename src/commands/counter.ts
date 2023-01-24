@@ -1,8 +1,8 @@
-import { delay } from "./lib/delay";
+import { sleep } from "./lib/sleep";
 
 export const _description_ = 'Every seconds counter';
 
-export default async function (
+export default function (
   this: IContext,
   ...args: string[]
 ) {
@@ -11,6 +11,6 @@ export default async function (
 
   while (true) {
     this.log('Count: ', ++i);
-    await delay(1000);
+    sleep(1000);
   }
 }
