@@ -1,14 +1,10 @@
-import "./index.sass";
-
 import { Cli } from "components/cli.component";
 import { StrictMode } from "react";
-import { render } from "react-dom";
+import { createRoot } from "react-dom/client";
 
-const app = document.getElementById('app');
-
-render(
-  <StrictMode>
-    <Cli />
-  </StrictMode>,
-  app
-);
+createRoot(document.getElementById('app')!)
+  .render(
+    <StrictMode>
+      <Cli />
+    </StrictMode>
+  );

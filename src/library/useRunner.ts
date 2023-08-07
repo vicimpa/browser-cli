@@ -4,7 +4,7 @@ import Worker from "library/worker?worker";
 import { version } from "../../package.json";
 import { useProxyState } from "./useProxyState";
 
-const modules = import.meta.glob('/src/commands/*.ts');
+const modules = import.meta.glob('../commands/*.ts');
 
 export const useRunner = () => {
   const state = useProxyState(() => ({
@@ -92,7 +92,7 @@ export const useRunner = () => {
             (<any>context)[program](...args);
         };
 
-        const module = modules[`/src/commands/${program}.ts`];
+        const module = modules[`../commands/${program}.ts`];
 
 
         subs.push(() => {

@@ -1,10 +1,10 @@
 import { delay } from "./lib/delay";
+import { sleep } from "./lib/sleep";
 
 export const _description_ = 'Ping-Pong Program';
 
-export default async function (this: IContext) {
+export default function (this: IContext) {
   this.log('Wait 1 second');
-  await delay(1000);
+  sleep(1000);
   this.log('Pong!');
-
 }
