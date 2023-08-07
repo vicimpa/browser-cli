@@ -1,4 +1,3 @@
-import { delay } from "./lib/delay";
 import { sleep } from "./lib/sleep";
 
 export const _description_ = 'Ping-Pong Program';
