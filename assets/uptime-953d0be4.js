@@ -1,0 +1,1 @@
+import{g as r}from"./getEnv-9bda9e15.js";const a="Show current session uptime",d=()=>{const{startTime:e}=r();let t=Date.now()-e,s=t%1e3,m=(t/=1e3)|0%60,o=(t/=60)|0%60,n=(t/=60)|0%24;return`System uptime: ${(t/=24)|0}d ${n}h ${o}m ${m}s ${s}ms`};export{a as _description_,d as default};
